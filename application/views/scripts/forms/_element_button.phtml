@@ -1,6 +1,8 @@
 
 		<span class="<?=$this->class;?>">
-			<span><?=$this->translate($this->element->getLabel());?></span>
+			<?php if ($this->element->getLabel()) :?>
+				<span><?=$this->translate($this->element->getLabel());?></span>
+			<?php endif;?>
 			<?= $this->{$this->element->helper}(
 		        $this->element->getName(),
 		        $this->element->getValue(),

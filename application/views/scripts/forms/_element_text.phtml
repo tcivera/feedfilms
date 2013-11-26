@@ -1,7 +1,9 @@
 <div class="form-group <?=($this->element->getMessages())?'has-error':'';?>" >
+	<?php if ($this->element->getLabel()) :?>
 	<label>
 		<?=$this->translate($this->element->getLabel());?>
 	</label>
+	<?php endif;?>
 	 <div class="control-label">
 			<?php echo $this->{$this->element->helper}(
 		        $this->element->getName(),

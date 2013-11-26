@@ -5,50 +5,64 @@ class Application_Form_Author extends Zend_Form
 	public function init()
 	{
 		$this->setMethod('post');
-		$this->setName('album');
-
-		$id = new Zend_Form_Element_Hidden('id');
-		$id->addFilter('Int');
-
+		$this->setName('login');		
+		$this->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_formsignin.phtml'))));
+		
         $email = new Zend_Form_Element_Text('email');
-		$email->setLabel('Email')
-				->setRequired(true)
+		$email->setRequired(true)
 				->addValidator('NotEmpty', true)
 				->addFilter('StripTags')
 				->addFilter('StringTrim')
 				->addValidator('StringLength',false,array(3,200))
 				->addValidator('emailAddress', true)
 				->setAttrib('size', 30)
-				->setAttrib('maxlength', 80);
+				->setAttrib('maxlength', 80)
+				->setAttrib('placeholder', 'Email address')
+				->setAttrib('class', 'form-control')
+				->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_text.phtml'))));
 		
 		$password = new Zend_Form_Element_Password('password');
-		$password->setLabel('Password')
-				->setRequired(true)
+		$password->setRequired(true)
 				->addValidator('NotEmpty', true)
 				->addFilter('StripTags')
 				->addFilter('StringTrim')
 				->addValidator('StringLength',false,array(6,20))
 				->setAttrib('size', 30)
-				->setAttrib('maxlength', 80);
+				->setAttrib('maxlength', 80)
+				->setAttrib('placeholder', 'Password')
+				->setAttrib('class', 'form-control')
+				->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_text.phtml'))));
 
+		$recaptcha = new Zend_Service_ReCaptcha(
+			Zend_Registry::get("recaptcha.public"),
+				Zend_Registry::get("recaptcha.private"));
         $captcha = new Zend_Form_Element_Captcha('foo', array(
             'label' => "Please verify you're a human",
-            'captcha' => 'Figlet',
+            'captcha' => 'ReCaptcha',
             'captchaOptions' => array(
-                'captcha' => 'Figlet',
-                'wordLen' => 6,
-                'timeout' => 300,
-            ),
+                'captcha' => 'Recaptcha',
+                'service' => $recaptcha),
+                'ignore' => true
+            
         ));
 
         $submit = new Zend_Form_Element_Submit('submit');
 		$submit->setAttrib('id', 'submitbutton');
-
-		$this->addElements(array($id,
+		$submit->setLabel('');
+		$submit->setValue('Signin');
+		$submit->setAttrib('class', 'btn btn-lg btn-primary btn-block');
+		$submit->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_button.phtml'))));
+		
+		$reset = new Zend_Form_Element_Reset('reset');
+		$reset->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_button.phtml'))));
+		$reset->setLabel('');
+		$reset->setValue('Clear');
+		$reset->setAttrib('class', 'btn btn-lg btn-primary btn-block');
+		$this->addElements(array(
                                 $email,
                                 $password,
 								$captcha,
-                                $submit
-		));
+                                $submit,
+								$reset));
 	}
 }

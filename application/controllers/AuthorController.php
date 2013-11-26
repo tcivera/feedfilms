@@ -25,18 +25,22 @@ class AuthorController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if ($form->isValid($formData)) {
-                $db = $this->_getParam('db');
+                $db = Zend_Registry::get("db");
                 $authAdapter = new Zend_Auth_Adapter_DbTable(
                     $db,
                     'users',
                     'email',
-                    'password'
+                    'password'                	 
                 );
-                $authAdapter->setIdentity($formData['email'])->setCredential( $formData['password']);
+                $authAdapter->setIdentity($formData['email']);
+                $authAdapter->setCredential( $formData['password']);
+                $authAdapter->setCredentialTreatment('SHA2(?,256) AND state = 1');
                 $auth = Zend_Auth::getInstance();
                 $result = $auth->authenticate($authAdapter);
                 if ($result->isValid()){
-                    $this->_helper->FlashMessenger('Succesful login');
+                	$userInfo = $authAdapter->getResultRowObject(null, "password");
+                    $auth->getStorage()->write($userInfo);
+                    $this->view->passedAuthentication = true;
                     $this->_helper->redirector->goToSimple('index', 'backend');
                 }
                 $this->_helper->FlashMessenger('Bad credentials!!!');
