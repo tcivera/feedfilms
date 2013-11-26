@@ -107,7 +107,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	Zend_Registry::set("timeout", $verify['timeout']);
     }
     
-    protected function _initRecaptcha() 
+    protected function _initReCaptcha()
     {
     	$recaptcha = $this->getOption('recaptcha');
     	Zend_Registry::set("recaptcha.public", $recaptcha['public']);

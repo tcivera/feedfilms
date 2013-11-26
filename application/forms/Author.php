@@ -4,6 +4,9 @@ class Application_Form_Author extends Zend_Form
 {
 	public function init()
 	{
+		
+		
+		
 		$this->setMethod('post');
 		$this->setName('login');		
 		$this->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/_element_formsignin.phtml'))));
@@ -28,6 +31,7 @@ class Application_Form_Author extends Zend_Form
 				->addFilter('StringTrim')
 				->addValidator('StringLength',false,array(6,20))
 				->setAttrib('size', 30)
+<<<<<<< HEAD
 				->setAttrib('maxlength', 80)
 				->setAttrib('placeholder', 'Password')
 				->setAttrib('class', 'form-control')
@@ -45,6 +49,28 @@ class Application_Form_Author extends Zend_Form
                 'ignore' => true
             
         ));
+=======
+				->setAttrib('maxlength', 80);
+		
+		
+		
+		$recaptcha = new Zend_Service_ReCaptcha(
+					Zend_Registry::get("recaptcha.public"), 
+					Zend_Registry::get("recaptcha.private"));
+		
+		$captcha = new Zend_Form_Element_Captcha('captcha',
+				array(
+						'captcha'       => 'ReCaptcha',
+						'captchaOptions' => array(
+								'captcha' => 'ReCaptcha', 
+								'service' => $recaptcha),
+						'ignore' => true
+				)
+		);
+		
+		
+        
+>>>>>>> 686826d2719d30075c70bf3215485fbcca435127
 
         $submit = new Zend_Form_Element_Submit('submit');
 		$submit->setAttrib('id', 'submitbutton');
@@ -62,7 +88,16 @@ class Application_Form_Author extends Zend_Form
                                 $email,
                                 $password,
 								$captcha,
+<<<<<<< HEAD
                                 $submit,
 								$reset));
+=======
+                                $submit
+		));
+		// And finally add some CSRF protection
+		$this->addElement('hash', 'csrf', array(
+				'ignore' => true,
+		));
+>>>>>>> 686826d2719d30075c70bf3215485fbcca435127
 	}
 }
