@@ -45,7 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->navigation($container);
 	}
     
-    protected function _initDatabase()
+  /*  protected function _initDatabase()
     {
     	$this->bootstrapDb();
     	$db = $this->getResource('db');
@@ -55,7 +55,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	Zend_Registry::set("db", $db);
     
     	return $db;
-    }    
+    }    */
     
     protected function _initSession()
     {
