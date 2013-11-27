@@ -1,6 +1,6 @@
 <?php
 
-class BackendController extends Zend_Controller_Action
+class Backend_IndexController extends Zend_Controller_Action
 {
 
 	public $_auth;
