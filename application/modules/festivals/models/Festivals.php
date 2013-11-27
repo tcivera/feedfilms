@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Festivals
+class Festivals_Model_Festivals
 {
     protected $_idfestival;
     protected $_name;

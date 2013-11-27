@@ -1,6 +1,6 @@
 <?php 
 
-class Application_Form_Festival extends Zend_Form
+class Festivals_Form_Festival extends Zend_Form
 {
 	public function init()
 	{

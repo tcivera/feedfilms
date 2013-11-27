@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_FestivalsMapper
+class Festivals_Model_FestivalsMapper
 {
     protected $_dbTable;
 
@@ -19,12 +19,12 @@ class Application_Model_FestivalsMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Festivals');
+            $this->setDbTable('Festivals_Model_DbTable_Festivals');
         }
         return $this->_dbTable;
     }
 
-    public function save(Application_Model_Festivals $festival)
+    public function save(Festivals_Model_Festivals $festival)
     {
         $data = array(
         	'idfestival'  => ($festival->getIdfestival() ? $festival->getIdfestival() : NULL),
@@ -50,7 +50,7 @@ class Application_Model_FestivalsMapper
             return;
         }
         $row = $result->current();
-        $festival = new Application_Model_Festivals($row->toArray());
+        $festival = new Festivals_Model_Festivals($row->toArray());
         return $festival;
     }
 
@@ -59,7 +59,7 @@ class Application_Model_FestivalsMapper
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
-            $entry = new Application_Model_Festivals($row->toArray());
+            $entry = new Festivals_Model_Festivals($row->toArray());
             $entries[] = $entry;
         }
         return $entries;
@@ -67,7 +67,7 @@ class Application_Model_FestivalsMapper
     
     public function delete($id)
     {
-    	$user = new Application_Model_DbTable_User();
+    	$user = new Festivals_Model_DbTable_Festivals();
     	$where = $user->getAdapter()->quoteInto('idfestival = ?', (int)$id);
     	$this->getDbTable()->delete($where);
     }

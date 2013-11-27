@@ -2,7 +2,7 @@
 $this->title = "My Festivals";
 $this->headTitle($this->title);
 ?>
-<p><a href="<?php echo $this->url(array('controller'=>'festivals', 
+<p><a href="<?php echo $this->url(array('controller'=>'index', 
 'action'=>'add'));?>">Add new festival</a></p>
 <table>
 	<tr>
@@ -22,9 +22,9 @@ $this->headTitle($this->title);
 		<td><?php echo $this->escape(new Zend_Date($festival->update));?></td>
 
 		<td>
-			<a href="<?php echo $this->url(array('controller'=>'festivals',
+			<a href="<?php echo $this->url(array('controller'=>'index',
 			'action'=>'edit', 'id'=>$festival->idfestival));?>">Edit</a>
-<a href="<?php echo $this->url(array('controller'=>'festivals',
+<a href="<?php echo $this->url(array('controller'=>'index',
 'action'=>'delete', 'id'=>$festival->idfestival));?>">Delete</a>
 </td>
 </tr>

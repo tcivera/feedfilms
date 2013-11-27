@@ -1,6 +1,6 @@
 <?php
 
-class FestivalsController extends Zend_Controller_Action
+class Festivals_IndexController extends Zend_Controller_Action
 {
 
     public function init()
@@ -11,13 +11,13 @@ class FestivalsController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $festivales = new Application_Model_FestivalsMapper();
+        $festivales = new Festivals_Model_FestivalsMapper();
         $this->view->festivals = $festivales->fetchAll();
     }
     
     function addAction()
     {
-        $form = new Application_Form_Festival();
+        $form = new Festivals_Form_Festival();
         $form->submit->setLabel('Add');
         $this->view->form = $form;
         if ($this->getRequest()->isPost()) {
@@ -25,8 +25,8 @@ class FestivalsController extends Zend_Controller_Action
             if ($form->isValid($formData)) {
             	$date = new Zend_Date($formData['date']);
             	$formData['date'] = $date->toString('YYYY-MM-dd 00:00:00');
-            	$festival = new Application_Model_Festivals($formData);
-            	$festivalsMapper = new Application_Model_FestivalsMapper();
+            	$festival = new Festivals_Model_Festivals($formData);
+            	$festivalsMapper = new Festivals_Model_FestivalsMapper();
                 $festivalsMapper->save($festival);
                 $this->_helper->redirector('index');
             } else {
@@ -37,7 +37,7 @@ class FestivalsController extends Zend_Controller_Action
 
     function editAction()
     {
-        $form = new Application_Form_Festival();
+        $form = new Festivals_Form_Festival();
         $form->submit->setLabel('Save');
         $this->view->form = $form;
         if ($this->getRequest()->isPost()) {
@@ -45,8 +45,8 @@ class FestivalsController extends Zend_Controller_Action
             if ($form->isValid($formData)) {
             	$date = new Zend_Date($formData['date']);
             	$formData['date'] = $date->toString('YYYY-MM-dd 00:00:00');
-            	$festival = new Application_Model_Festivals($formData);
-            	$festivalsMapper = new Application_Model_FestivalsMapper();
+            	$festival = new Festivals_Model_Festivals($formData);
+            	$festivalsMapper = new Festivals_Model_FestivalsMapper();
             	$festivalsMapper->save($festival);
                 $this->_helper->redirector('index');
             } else {
@@ -55,7 +55,7 @@ class FestivalsController extends Zend_Controller_Action
         } else {
             $id = $this->_getParam('id', 0);
             if ($id > 0) {
-                $festivals = new Application_Model_FestivalsMapper();
+                $festivals = new Festivals_Model_FestivalsMapper();
             	$festival = $festivals->find($id);
             	$date = new Zend_Date($festival->date);
             	$festival->date = $date->toString('MM/dd/YYYY');
@@ -70,13 +70,13 @@ class FestivalsController extends Zend_Controller_Action
             $del = $this->getRequest()->getPost('del');
             if ($del == 'Yes') {
                 $id = $this->getRequest()->getPost('id');
-                $festivals = new Application_Model_FestivalsMapper();
+                $festivals = new Festivals_Model_FestivalsMapper();
                 $festivals->delete($id);
             }
             $this->_helper->redirector('index');
         } else {
             $id = $this->_getParam('id', 0);
-            $festivals = new Application_Model_FestivalsMapper();
+            $festivals = new Festivals_Model_FestivalsMapper();
             $this->view->festival = $festivals->find($id);
         }
     }
